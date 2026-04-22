@@ -1,4 +1,3 @@
-```markdown
 # 🛒 FreshCart — E-Commerce Application
 
 A full-featured e-commerce web application built with **Angular 21** featuring SSR, lazy loading, signals, and a modern UI powered by Tailwind CSS and Flowbite.
@@ -87,4 +86,3 @@ src/app/
     └── components/
         └── featured-products/
 ```
-"# E-commerce-FreshCart" 
