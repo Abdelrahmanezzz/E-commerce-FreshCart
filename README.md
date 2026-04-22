@@ -7,7 +7,7 @@ A full-featured e-commerce web application built with **Angular 21** featuring S
 
 ## 🚀 Live Demo
 
-> [freshcart.vercel.app](https://freshcart.vercel.app) *(update after deployment)*
+> https://freshcart-jvzc7z5pd-abdel-rahmanel-sayed1230162-4848s-projects.vercel.app*
 
 ---
 
