@@ -1,0 +1,170 @@
+<!-- Carousel -->
+<div id="home-carousel" class="relative w-full" data-carousel="slide">
+  <!-- slides wrapper -->
+  <div class="relative h-105 overflow-hidden md:h-125">
+    @for (slide of slides; track $index) {
+      <div
+        class="item hidden duration-700 ease-in-out"
+        [attr.data-carousel-item]="$index === 0 ? 'active' : ''"
+      >
+        <div class="flex h-full items-center px-10 md:px-20">
+          <div class="max-w-xl space-y-5 text-white">
+            <span
+              class="inline-block rounded-full bg-white/20 px-4 py-1.5 text-sm font-medium backdrop-blur-sm"
+            >
+              {{ slide.badge }}
+            </span>
+
+            <h2 class="text-3xl font-bold leading-tight md:text-5xl">
+              {{ slide.title }}
+            </h2>
+
+            <p class="text-lg text-white/90 md:text-xl">
+              {{ slide.subtitle }}
+            </p>
+
+            <a
+              [routerLink]="slide.btnLink"
+              class="inline-flex items-center gap-2 rounded-full bg-white px-8 py-3 font-bold text-emerald-700 shadow-lg transition-all hover:-translate-y-0.5 hover:bg-gray-50 hover:shadow-xl"
+            >
+              {{ slide.btnText }}
+              <i class="fas fa-arrow-right text-sm"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- indicators -->
+  <div class="absolute bottom-5 left-1/2 z-30 flex -translate-x-1/2 gap-3">
+    @for (slide of slides; track $index) {
+      <button
+        type="button"
+        class="h-2.5 w-2.5 rounded-full transition-all"
+        [class]="$index === 0 ? 'bg-white' : 'bg-white/50 hover:bg-white'"
+        [attr.aria-label]="'Slide ' + ($index + 1)"
+        [attr.data-carousel-slide-to]="$index"
+      ></button>
+    }
+  </div>
+
+  <!-- prev -->
+  <button
+    type="button"
+    data-carousel-prev
+    class="group absolute left-0 top-0 z-30 flex h-full items-center justify-center px-4 focus:outline-none"
+  >
+    <span
+      class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm transition group-hover:bg-white/40"
+    >
+      <svg
+        class="h-5 w-5 text-white"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="m15 19-7-7 7-7"
+        />
+      </svg>
+      <span class="sr-only">Previous</span>
+    </span>
+  </button>
+
+  <!-- next -->
+  <button
+    type="button"
+    data-carousel-next
+    class="group absolute right-0 top-0 z-30 flex h-full items-center justify-center px-4 focus:outline-none"
+  >
+    <span
+      class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm transition group-hover:bg-white/40"
+    >
+      <svg
+        class="h-5 w-5 text-white"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="m9 5 7 7-7 7"
+        />
+      </svg>
+      <span class="sr-only">Next</span>
+    </span>
+  </button>
+</div>
+
+<!-- static 4 items strip -->
+<section class="bg-gray-50 py-10">
+  <div class="mx-auto max-w-7xl px-6">
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <div
+        class="flex items-center gap-4 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm transition hover:shadow-md"
+      >
+        <div
+          class="flex h-12 w-12 items-center justify-center rounded-full bg-blue-50 text-xl text-blue-600"
+        >
+          <i class="fa-solid fa-truck-fast"></i>
+        </div>
+        <div>
+          <h4 class="text-sm font-bold text-gray-900">Free Shipping</h4>
+          <p class="text-xs italic text-gray-500">On orders over 500 EGP</p>
+        </div>
+      </div>
+
+      <div
+        class="flex items-center gap-4 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm transition hover:shadow-md"
+      >
+        <div
+          class="flex h-12 w-12 items-center justify-center rounded-full bg-emerald-50 text-xl text-emerald-600"
+        >
+          <i class="fa-solid fa-shield-halved"></i>
+        </div>
+        <div>
+          <h4 class="text-sm font-bold text-gray-900">Secure Payment</h4>
+          <p class="text-xs italic text-gray-500">100% secure transactions</p>
+        </div>
+      </div>
+
+      <div
+        class="flex items-center gap-4 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm transition hover:shadow-md"
+      >
+        <div
+          class="flex h-12 w-12 items-center justify-center rounded-full bg-orange-50 text-xl text-orange-600"
+        >
+          <i class="fa-solid fa-rotate-left"></i>
+        </div>
+        <div>
+          <h4 class="text-sm font-bold text-gray-900">Easy Returns</h4>
+          <p class="text-xs italic text-gray-500">14-day return policy</p>
+        </div>
+      </div>
+
+      <div
+        class="flex items-center gap-4 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm transition hover:shadow-md"
+      >
+        <div
+          class="flex h-12 w-12 items-center justify-center rounded-full bg-purple-50 text-xl text-purple-600"
+        >
+          <i class="fa-solid fa-headset"></i>
+        </div>
+        <div>
+          <h4 class="text-sm font-bold text-gray-900">24/7 Support</h4>
+          <p class="text-xs italic text-gray-500">Dedicated support team</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

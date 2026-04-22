@@ -1,0 +1,115 @@
+<!-- Hero -->
+<section class="bg-linear-to-r from-emerald-700 to-emerald-500 px-6 py-14 text-white">
+  <div class="mx-auto max-w-7xl">
+    <p class="mb-4 text-sm opacity-90">
+      <a routerLink="/home" class="transition-colors hover:text-white/80">Home</a>
+      <span class="mx-2">/</span>
+      <span>Categories</span>
+    </p>
+
+    <div class="flex items-center gap-4">
+      <div
+        class="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/20 backdrop-blur-sm"
+      >
+        <i class="fa-solid fa-layer-group text-2xl"></i>
+      </div>
+      <div>
+        <h1 class="text-3xl font-bold md:text-4xl">All Categories</h1>
+        <p class="text-sm opacity-90">Browse our wide range of product categories</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Categories Grid -->
+<section class="min-h-screen bg-gray-50 px-6 py-14">
+  <div class="mx-auto max-w-7xl">
+    <!-- Loading Skeleton -->
+    @if (isLoading()) {
+      <div class="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+        @for (item of skeletonCards; track $index) {
+          <div class="animate-pulse rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
+            <div class="mb-5 flex h-40 items-center justify-center rounded-xl bg-gray-100"></div>
+            <div class="mx-auto h-4 w-24 rounded bg-gray-100"></div>
+          </div>
+        }
+      </div>
+    }
+
+    <!-- Error State -->
+    @else if (errorMessage()) {
+      <div
+        class="rounded-2xl border border-red-200 bg-red-50 p-8 text-center shadow-sm"
+        role="alert"
+      >
+        <div
+          class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-red-100"
+        >
+          <i class="fa-solid fa-triangle-exclamation text-2xl text-red-500"></i>
+        </div>
+        <p class="mb-1 font-semibold text-red-700">Unable to load categories</p>
+        <p class="mb-4 text-sm text-red-600">{{ errorMessage() }}</p>
+        <button
+          type="button"
+          (click)="loadCategories()"
+          class="rounded-lg bg-red-600 px-5 py-2.5 font-medium text-white transition hover:bg-red-700"
+        >
+          Try Again
+        </button>
+      </div>
+    }
+
+    <!-- Categories -->
+    @else if (categories().length) {
+      <div class="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+        @for (category of categories(); track category._id) {
+          <a
+            [routerLink]="['/shop']"
+            [queryParams]="{ category: category._id }"
+            class="group flex cursor-pointer flex-col rounded-2xl border border-gray-100 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-emerald-200 hover:shadow-md"
+          >
+            <!-- Image -->
+            <div
+              class="mb-5 flex h-40 items-center justify-center overflow-hidden rounded-xl bg-gray-50 transition-colors duration-300 group-hover:bg-emerald-50"
+            >
+              <img
+                [src]="category.image"
+                [alt]="category.name"
+                class="h-32 object-contain transition-transform duration-300 group-hover:scale-110"
+              />
+            </div>
+
+            <!-- Name -->
+            <h3
+              class="text-center font-semibold text-gray-800 transition-colors group-hover:text-emerald-600"
+            >
+              {{ category.name }}
+            </h3>
+
+            <!-- Arrow -->
+            <div class="mt-3 flex justify-center">
+              <span
+                class="flex h-7 w-7 items-center justify-center rounded-full bg-gray-100 text-xs text-gray-400 transition-all duration-300 group-hover:bg-emerald-600 group-hover:text-white"
+              >
+                <i class="fas fa-arrow-right"></i>
+              </span>
+            </div>
+          </a>
+        }
+      </div>
+    }
+
+    <!-- Empty State -->
+    @else {
+      <div class="mx-auto max-w-md px-4 py-16 text-center">
+        <div
+          class="mx-auto mb-8 flex h-40 w-40 items-center justify-center rounded-full bg-gray-100"
+        >
+          <i class="fa-solid fa-layer-group text-6xl text-gray-300"></i>
+        </div>
+        <h2 class="mb-4 text-3xl font-bold tracking-tight text-gray-900">No Categories Found</h2>
+        <p class="text-lg leading-relaxed text-gray-500">Please check back later.</p>
+      </div>
+    }
+  </div>
+</section>

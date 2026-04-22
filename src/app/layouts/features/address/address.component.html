@@ -1,0 +1,168 @@
+<section>
+  <div class="mx-auto max-w-6xl py-10">
+    <!-- header -->
+    <div class="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-center">
+      <div>
+        <h1 class="flex items-center gap-3 text-3xl font-bold text-gray-900">
+          <span
+            class="flex h-9 w-9 items-center justify-center rounded-md bg-emerald-700 text-lg text-white"
+          >
+            <i class="fa-solid fa-receipt"></i>
+          </span>
+          Complete Your Order
+        </h1>
+        <p class="mt-1 text-gray-500">Review your items and complete your purchase</p>
+      </div>
+
+      <a
+        routerLink="/cart"
+        class="flex items-center gap-2 font-medium text-emerald-600 transition-colors hover:text-emerald-800"
+      >
+        <i class="fa-solid fa-arrow-left-long"></i>
+        Back to Cart
+      </a>
+    </div>
+
+    <!-- form card -->
+    <div class="overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm">
+      <div class="p-6">
+        <form [formGroup]="addressForm" (ngSubmit)="addressSubmit($event)" class="space-y-5">
+          <!-- city -->
+          <div>
+            <label for="city" class="mb-2 block text-sm font-medium text-gray-900">
+              City <span class="text-red-500">*</span>
+            </label>
+            <div class="relative">
+              <div
+                class="pointer-events-none absolute inset-y-0 inset-s-0 flex items-center ps-3.5 text-gray-400"
+              >
+                <i class="fa-solid fa-city"></i>
+              </div>
+              <input
+                id="city"
+                type="text"
+                formControlName="city"
+                placeholder="e.g. Cairo, Alexandria, Giza"
+                class="block w-full rounded-lg border p-3 ps-10 text-sm text-gray-900 transition-colors"
+                [class.border-gray-300]="!isInvalid('city')"
+                [class.focus:border-emerald-500]="!isInvalid('city')"
+                [class.border-red-400]="isInvalid('city')"
+              />
+            </div>
+            @if (isInvalid('city')) {
+              <p class="mt-1 text-xs text-red-500">City is required.</p>
+            }
+          </div>
+
+          <!-- street address -->
+          <div>
+            <label for="details" class="mb-2 block text-sm font-medium text-gray-900">
+              Street Address <span class="text-red-500">*</span>
+            </label>
+            <div class="relative">
+              <div
+                class="pointer-events-none absolute inset-s-0 top-3.5 flex items-start ps-3.5 text-gray-400"
+              >
+                <i class="fa-solid fa-location-dot"></i>
+              </div>
+              <textarea
+                id="details"
+                rows="3"
+                formControlName="details"
+                placeholder="Street name, building number, floor, apartment..."
+                class="block w-full rounded-lg border p-3 ps-10 text-sm text-gray-900 transition-colors"
+                [class.border-gray-300]="!isInvalid('details')"
+                [class.border-red-400]="isInvalid('details')"
+              ></textarea>
+            </div>
+            @if (isInvalid('details')) {
+              <p class="mt-1 text-xs text-red-500">Street address is required.</p>
+            }
+          </div>
+
+          <!-- phone -->
+          <div>
+            <label for="phone" class="mb-2 block text-sm font-medium text-gray-900">
+              Phone Number <span class="text-red-500">*</span>
+            </label>
+            <div class="relative">
+              <div
+                class="pointer-events-none absolute inset-y-0 inset-s-0 flex items-center ps-3.5 text-gray-400"
+              >
+                <i class="fa-solid fa-phone"></i>
+              </div>
+              <input
+                id="phone"
+                type="tel"
+                formControlName="phone"
+                placeholder="01xxxxxxxxx"
+                class="block w-full rounded-lg border p-3 ps-10 text-sm text-gray-900 transition-colors"
+                [class.border-gray-300]="!isInvalid('phone')"
+                [class.border-red-400]="isInvalid('phone')"
+              />
+              <div class="pointer-events-none absolute inset-y-0 inset-e-0 flex items-center pe-3">
+                <span class="text-xs text-gray-400">Egyptian numbers only</span>
+              </div>
+            </div>
+            @if (isInvalid('phone')) {
+              <p class="mt-1 text-xs text-red-500">
+                Please enter a valid Egyptian phone number (e.g., 01012345678).
+              </p>
+            }
+          </div>
+
+          <!-- payment buttons -->
+          <div class="grid grid-cols-1 gap-4 pt-2 sm:grid-cols-2">
+            <!-- cash -->
+            <button
+              type="submit"
+              name="submitBtn"
+              value="cash"
+              [disabled]="isLoading()"
+              class="relative flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border border-emerald-600 py-5 text-emerald-700 transition-colors hover:bg-emerald-50 disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              <i
+                class="fa-solid fa-arrow-right absolute right-4 top-4 text-xs text-emerald-600"
+              ></i>
+              <div
+                class="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-600 text-white"
+              >
+                @if (isLoading()) {
+                  <i class="fa-solid fa-spinner animate-spin"></i>
+                } @else {
+                  <i class="fa-solid fa-money-bill"></i>
+                }
+              </div>
+              <p class="text-sm font-semibold">Cash on Delivery</p>
+              <p class="text-xs text-gray-500">Pay when it arrives</p>
+            </button>
+
+            <!-- visa -->
+            <button
+              type="submit"
+              name="submitBtn"
+              value="visa"
+              [disabled]="isLoading()"
+              class="relative flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border border-emerald-600 py-5 text-emerald-700 transition-colors hover:bg-emerald-50 disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              <i
+                class="fa-solid fa-arrow-right absolute right-4 top-4 text-xs text-emerald-600"
+              ></i>
+              <div
+                class="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-600 text-white"
+              >
+                @if (isLoading()) {
+                  <i class="fa-solid fa-spinner animate-spin"></i>
+                } @else {
+                  <i class="fa-solid fa-credit-card"></i>
+                }
+              </div>
+              <p class="text-sm font-semibold">Pay with Visa</p>
+              <p class="text-xs text-gray-500">Secure online payment</p>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

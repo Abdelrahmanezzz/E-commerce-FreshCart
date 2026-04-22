@@ -1,0 +1,227 @@
+@if (isLoading()) {
+  <!-- skeleton loader -->
+  <section class="p-4 md:p-8">
+    <div class="mx-auto max-w-6xl">
+      <div class="grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]">
+        <div class="space-y-4 animate-pulse">
+          <div class="h-96 rounded-2xl bg-gray-100"></div>
+          <div class="flex gap-3">
+            <div class="h-20 w-20 rounded-lg bg-gray-100"></div>
+            <div class="h-20 w-20 rounded-lg bg-gray-100"></div>
+            <div class="h-20 w-20 rounded-lg bg-gray-100"></div>
+          </div>
+        </div>
+        <div class="space-y-4 animate-pulse">
+          <div class="flex gap-2">
+            <div class="h-6 w-32 rounded-full bg-gray-100"></div>
+            <div class="h-6 w-24 rounded-full bg-gray-100"></div>
+          </div>
+          <div class="h-10 w-3/4 rounded bg-gray-100"></div>
+          <div class="h-5 w-40 rounded bg-gray-100"></div>
+          <div class="h-8 w-28 rounded bg-gray-100"></div>
+          <div class="h-20 w-full rounded bg-gray-100"></div>
+          <div class="flex gap-3 pt-4">
+            <div class="h-14 flex-1 rounded-xl bg-gray-100"></div>
+            <div class="h-14 flex-1 rounded-xl bg-gray-100"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+} @else if (product()) {
+  <section class="p-4 md:p-8">
+    <div class="mx-auto max-w-6xl">
+      <div class="grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]">
+        <!-- image section -->
+        <div class="space-y-4">
+          <div class="overflow-hidden rounded-2xl border border-gray-100 bg-gray-50 shadow-sm">
+            <img
+              [src]="selectedImage()"
+              [alt]="product()!.title"
+              class="w-full object-cover transition-all duration-300"
+            />
+          </div>
+
+          @if (product()!.images.length > 1) {
+            <div class="flex gap-3 overflow-x-auto pb-1">
+              @for (img of product()!.images; track img) {
+                <button
+                  type="button"
+                  (click)="changeImage(img)"
+                  class="h-20 w-20 shrink-0 overflow-hidden rounded-lg border-2 transition-all"
+                  [class.border-emerald-500]="selectedImage() === img"
+                  [class.border-gray-200]="selectedImage() !== img"
+                  [class.opacity-60]="selectedImage() !== img"
+                >
+                  <img [src]="img" [alt]="product()!.title" class="h-full w-full object-contain" />
+                </button>
+              }
+            </div>
+          }
+        </div>
+
+        <!-- info section -->
+        <div class="flex flex-col gap-6">
+          <div class="space-y-3">
+            <!-- badges -->
+            <div class="flex gap-2">
+              <span
+                class="rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-medium text-emerald-600"
+              >
+                {{ product()!.category.name }}
+              </span>
+              @if (product()!.brand.name) {
+                <span
+                  class="rounded-full bg-gray-100 px-2.5 py-1 text-xs font-medium text-gray-600"
+                >
+                  {{ product()!.brand.name }}
+                </span>
+              }
+            </div>
+
+            <!-- title -->
+            <h1 class="text-3xl font-bold text-slate-900 md:text-4xl">
+              {{ product()!.title }}
+            </h1>
+
+            <!-- rating -->
+            <div class="flex items-center gap-2">
+              <div class="flex gap-0.5 text-sm text-yellow-400">
+                @for (star of stars; track star) {
+                  <i [class]="getStarClass(product()!.ratingsAverage, star)"></i>
+                }
+              </div>
+              <span class="text-sm font-medium text-gray-500">
+                {{ product()!.ratingsAverage }} ({{ product()!.ratingsQuantity }} reviews)
+              </span>
+            </div>
+
+            <!-- price -->
+            <p class="text-2xl font-bold text-slate-900">{{ product()!.price }} EGP</p>
+
+            <!-- stock -->
+            @if (product()!.quantity > 0) {
+              <span
+                class="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-600"
+              >
+                <span class="h-2 w-2 rounded-full bg-emerald-500"></span> In Stock
+              </span>
+            } @else {
+              <span
+                class="inline-flex items-center gap-1.5 rounded-full bg-red-50 px-3 py-1 text-xs font-bold text-red-600"
+              >
+                <span class="h-2 w-2 rounded-full bg-red-500"></span> Out of Stock
+              </span>
+            }
+          </div>
+
+          <!-- description -->
+          <p class="max-w-md text-sm leading-relaxed text-gray-500">
+            {{ product()!.description }}
+          </p>
+
+          <!-- action buttons -->
+          <div class="grid grid-cols-1 gap-3 pt-2 sm:grid-cols-2">
+            <button
+              type="button"
+              [disabled]="!isLoggedIn()"
+              (click)="addToCartAction()"
+              class="flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-emerald-600 py-3.5 font-bold text-white shadow-lg shadow-emerald-100 transition-all hover:bg-emerald-700 disabled:cursor-not-allowed disabled:bg-emerald-300"
+            >
+              <i class="fas fa-shopping-cart"></i> Add to Cart
+            </button>
+
+            <button
+              type="button"
+              [disabled]="!isLoggedIn()"
+              (click)="addToWishlistAction()"
+              class="cursor-pointer rounded-xl border border-gray-200 py-3 font-bold text-gray-700 transition-all hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              <i class="far fa-heart"></i> Add to Wishlist
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- related products -->
+  @if (relatedProducts().length) {
+    <section class="p-4 md:p-8">
+      <div class="mx-auto max-w-6xl">
+        <div class="mb-8 flex items-center gap-3">
+          <div class="h-8 w-1.5 rounded-full bg-linear-to-b from-emerald-500 to-emerald-700"></div>
+          <h2 class="text-3xl font-bold text-gray-800">
+            You May Also <span class="text-emerald-600">Like</span>
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          @for (item of relatedProducts(); track item._id) {
+            <div
+              class="group rounded-2xl border border-gray-100 bg-white p-4 shadow-sm transition-shadow duration-300 hover:shadow-md"
+            >
+              <div class="relative mb-4 overflow-hidden rounded-xl bg-white">
+                <a [routerLink]="['/product', item._id]">
+                  <img
+                    [src]="item.imageCover"
+                    [alt]="item.title"
+                    class="h-52 w-full object-contain transition-transform duration-300 group-hover:scale-105"
+                  />
+                </a>
+
+                <div class="absolute right-2 top-2 flex flex-col gap-2">
+                  <a
+                    [routerLink]="['/product', item._id]"
+                    class="flex h-10 w-10 items-center justify-center rounded-full border border-gray-100 bg-white text-gray-600 shadow-sm transition-all hover:bg-emerald-600 hover:text-white"
+                    title="View details"
+                  >
+                    <i class="far fa-eye"></i>
+                  </a>
+                </div>
+              </div>
+
+              <div class="space-y-1">
+                <p class="text-xs tracking-wide text-gray-400">
+                  {{ item.category.name }}
+                </p>
+
+                <a
+                  [routerLink]="['/product', item._id]"
+                  class="block cursor-pointer text-lg font-medium text-slate-800 transition-colors hover:text-emerald-600 line-clamp-2"
+                >
+                  {{ item.title }}
+                </a>
+
+                <div class="flex items-center gap-1">
+                  <div class="flex gap-0.5 text-xs text-yellow-400">
+                    @for (star of stars; track star) {
+                      <i [class]="getStarClass(item.ratingsAverage, star)"></i>
+                    }
+                  </div>
+                  <span class="text-xs font-medium text-gray-400">
+                    {{ item.ratingsAverage }}
+                  </span>
+                </div>
+
+                <div class="flex items-center justify-between pt-2">
+                  <span class="text-lg font-medium text-slate-900"> {{ item.price }} EGP </span>
+
+                  <button
+                    type="button"
+                    [disabled]="!isLoggedIn()"
+                    (click)="addRelatedToCart(item._id)"
+                    title="Add to cart"
+                    class="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-600 text-white shadow-sm transition-colors hover:bg-emerald-700 active:scale-95 disabled:cursor-not-allowed disabled:bg-emerald-300"
+                  >
+                    <i class="fas fa-plus"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </section>
+  }
+}

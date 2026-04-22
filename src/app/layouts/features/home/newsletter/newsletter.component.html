@@ -1,0 +1,143 @@
+<section class="my-10 px-6">
+  <div class="mx-auto max-w-7xl">
+    <div class="rounded-3xl bg-white/70 p-8 shadow-lg shadow-emerald-100 backdrop-blur md:p-12">
+      <div class="grid items-center gap-12 md:grid-cols-12">
+        <!-- Left Side -->
+        <div class="md:col-span-8">
+          <!-- Badge -->
+          <div class="mb-6 flex items-center gap-4">
+            <div
+              class="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-600 text-white shadow-md"
+            >
+              <i class="fas fa-envelope text-lg"></i>
+            </div>
+            <div>
+              <p class="text-sm font-semibold tracking-wide text-emerald-700">NEWSLETTER</p>
+              <p class="text-sm text-gray-500">50,000+ subscribers</p>
+            </div>
+          </div>
+
+          <!-- Title -->
+          <h2 class="mb-4 text-3xl font-bold leading-snug md:text-4xl">
+            Get the Freshest Updates
+            <span class="text-emerald-600"> Delivered Free</span>
+          </h2>
+
+          <p class="mb-8 text-gray-600">
+            Weekly recipes, seasonal offers & exclusive member perks.
+          </p>
+
+          <!-- Feature Pills -->
+          <div class="mb-8 flex flex-wrap gap-3">
+            <span
+              class="flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm text-gray-600 shadow-sm"
+            >
+              <i class="fas fa-leaf text-emerald-600"></i>
+              Fresh Picks Weekly
+            </span>
+            <span
+              class="flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm text-gray-600 shadow-sm"
+            >
+              <i class="fas fa-truck text-emerald-600"></i>
+              Free Delivery Codes
+            </span>
+            <span
+              class="flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm text-gray-600 shadow-sm"
+            >
+              <i class="fas fa-tags text-emerald-600"></i>
+              Members-Only Deals
+            </span>
+          </div>
+
+          <!-- Subscribed Success -->
+          @if (isSubscribed()) {
+            <div
+              class="mb-4 flex items-center gap-3 rounded-xl border border-emerald-200 bg-emerald-50 px-5 py-4 text-emerald-700"
+            >
+              <i class="fa-solid fa-circle-check text-xl text-emerald-500"></i>
+              <div>
+                <p class="font-semibold">You're subscribed!</p>
+                <p class="text-sm text-emerald-600">
+                  Thanks for joining. Check your inbox for a welcome gift 🎁
+                </p>
+              </div>
+            </div>
+          } @else {
+            <!-- Input + Button -->
+            <div class="flex flex-col gap-4 sm:flex-row">
+              <input
+                type="email"
+                [value]="email()"
+                (input)="email.set($any($event.target).value)"
+                placeholder="you@example.com"
+                class="flex-1 rounded-xl border border-gray-300 px-5 py-3 outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
+              />
+              <button
+                type="button"
+                (click)="subscribe()"
+                class="flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-6 py-3 font-medium text-white transition hover:bg-emerald-700 active:scale-95"
+              >
+                Subscribe
+                <i class="fas fa-arrow-right"></i>
+              </button>
+            </div>
+
+            <p class="mt-3 flex items-center gap-2 text-xs text-gray-500">
+              <i class="fas fa-shield-halved text-emerald-500"></i>
+              Unsubscribe anytime. No spam, ever.
+            </p>
+          }
+        </div>
+
+        <!-- Right Side — App Card -->
+        <div
+          class="rounded-3xl bg-linear-to-br from-slate-900 to-emerald-900 p-8 text-white shadow-xl md:col-span-4"
+        >
+          <span
+            class="mb-4 inline-flex items-center gap-2 rounded-full bg-emerald-500/20 px-3 py-1 text-xs text-emerald-300"
+          >
+            <i class="fas fa-mobile-alt"></i>
+            MOBILE APP
+          </span>
+
+          <h3 class="mb-3 text-2xl font-bold">Shop Faster on Our App</h3>
+
+          <p class="mb-6 text-sm text-gray-300">
+            Get app-exclusive deals & 15% off your first order.
+          </p>
+
+          <!-- Store Buttons -->
+          <div class="space-y-4">
+            <button
+              type="button"
+              class="flex w-full items-center justify-center gap-3 rounded-xl bg-white/10 py-3 transition hover:bg-white/20 active:scale-95"
+            >
+              <i class="fab fa-apple text-xl"></i>
+              Download on App Store
+            </button>
+
+            <button
+              type="button"
+              class="flex w-full items-center justify-center gap-3 rounded-xl bg-white/10 py-3 transition hover:bg-white/20 active:scale-95"
+            >
+              <i class="fab fa-google-play text-lg"></i>
+              Get it on Google Play
+            </button>
+          </div>
+
+          <!-- Rating -->
+          <div class="mt-6 flex items-center gap-3 text-sm">
+            <div class="flex gap-0.5 text-yellow-400">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+            </div>
+            <span class="text-gray-300">4.9 · 100K+ downloads</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

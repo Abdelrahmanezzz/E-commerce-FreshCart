@@ -1,0 +1,269 @@
+<section
+  class="mx-auto flex max-w-7xl grow flex-col gap-12 px-4 py-10 sm:px-6 lg:flex-row lg:gap-20 lg:py-16"
+>
+  <!-- Left Side -->
+  <div class="w-full space-y-10 lg:w-1/2">
+    <div>
+      <h1 class="mb-4 text-4xl font-bold tracking-tight text-slate-800">
+        Welcome to <span class="text-emerald-600">FreshCart</span>
+      </h1>
+      <p class="max-w-lg text-lg leading-relaxed text-gray-600">
+        Join thousands of happy customers who enjoy fresh groceries delivered right to their
+        doorstep.
+      </p>
+    </div>
+
+    <!-- Features -->
+    <ul class="space-y-6">
+      <li class="flex items-start gap-4">
+        <div
+          class="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-emerald-100 text-emerald-600"
+        >
+          <i class="fa-solid fa-star text-lg"></i>
+        </div>
+        <div>
+          <h3 class="text-base font-semibold text-gray-800">Premium Quality</h3>
+          <p class="mt-1 text-sm text-gray-600">
+            Premium quality products sourced from trusted suppliers.
+          </p>
+        </div>
+      </li>
+
+      <li class="flex items-start gap-4">
+        <div
+          class="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-emerald-100 text-emerald-600"
+        >
+          <i class="fa-solid fa-truck-fast text-lg"></i>
+        </div>
+        <div>
+          <h3 class="text-base font-semibold text-gray-800">Fast Delivery</h3>
+          <p class="mt-1 text-sm text-gray-600">Same-day delivery available in most areas</p>
+        </div>
+      </li>
+
+      <li class="flex items-start gap-4">
+        <div
+          class="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-emerald-100 text-emerald-600"
+        >
+          <i class="fa-solid fa-shield-halved text-lg"></i>
+        </div>
+        <div>
+          <h3 class="text-base font-semibold text-gray-800">Secure Shopping</h3>
+          <p class="mt-1 text-sm text-gray-600">Your data and payments are completely secure</p>
+        </div>
+      </li>
+    </ul>
+
+    <!-- Testimonial -->
+    <figure class="relative rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
+      <figcaption class="mb-3 flex items-center gap-3">
+        <img
+          src="assets/female.jpeg"
+          alt="Portrait of Sarah Johnson"
+          class="h-10 w-10 rounded-full object-cover"
+        />
+        <div>
+          <h4 class="text-sm font-semibold text-gray-800">Sarah Johnson</h4>
+          <div class="flex gap-0.5 text-xs text-yellow-400" aria-label="5 out of 5 stars">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+        </div>
+      </figcaption>
+      <blockquote class="text-sm italic leading-relaxed text-gray-600">
+        "FreshCart has transformed my shopping experience. The quality of the products is
+        outstanding, and the delivery is always on time. Highly recommend!"
+      </blockquote>
+    </figure>
+  </div>
+
+  <!-- Right Side -->
+  <div
+    class="mx-auto w-full max-w-lg rounded-2xl border border-gray-100 bg-white p-8 shadow-xl shadow-black/5 sm:p-10 lg:mx-0 lg:w-1/2"
+  >
+    <div class="mb-8 text-center">
+      <h2 class="text-2xl font-bold text-slate-800">Create Your Account</h2>
+      <p class="mt-2 text-sm text-gray-500">Start your fresh journey with us today</p>
+    </div>
+
+    <!-- Error Alert -->
+    @if (errorMessage()) {
+      <div
+        class="mb-6 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700"
+        role="alert"
+      >
+        <div class="flex items-center gap-2 font-semibold">
+          <i class="fa-solid fa-circle-exclamation"></i>
+          {{ errorMessage() }}
+        </div>
+      </div>
+    }
+
+    <form [formGroup]="registerForm" (ngSubmit)="submitRegister()" class="space-y-4">
+      <!-- Name -->
+      <div>
+        <label for="name" class="mb-1.5 block text-sm text-gray-600">Name*</label>
+        <input
+          id="name"
+          type="text"
+          formControlName="name"
+          autocomplete="name"
+          placeholder="Ali"
+          class="w-full rounded-lg border px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 outline-none transition"
+          [class]="
+            name?.invalid && name?.touched
+              ? 'border-red-400 focus:ring-2 focus:ring-red-200'
+              : 'border-gray-200 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-100'
+          "
+        />
+        @if (name?.touched && name?.hasError('required')) {
+          <p class="mt-1 text-xs text-red-500">Full name is required.</p>
+        } @else if (name?.touched && name?.hasError('minlength')) {
+          <p class="mt-1 text-xs text-red-500">Name must be at least 3 characters.</p>
+        }
+      </div>
+
+      <!-- Email -->
+      <div>
+        <label for="reg-email" class="mb-1.5 block text-sm text-gray-600">Email*</label>
+        <input
+          id="reg-email"
+          type="email"
+          formControlName="email"
+          autocomplete="email"
+          placeholder="ali@example.com"
+          class="w-full rounded-lg border px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 outline-none transition"
+          [class]="
+            email?.invalid && email?.touched
+              ? 'border-red-400 focus:ring-2 focus:ring-red-200'
+              : 'border-gray-200 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-100'
+          "
+        />
+        @if (email?.touched && email?.hasError('required')) {
+          <p class="mt-1 text-xs text-red-500">Email is required.</p>
+        } @else if (email?.touched && email?.hasError('email')) {
+          <p class="mt-1 text-xs text-red-500">Please enter a valid email address.</p>
+        }
+      </div>
+
+      <!-- Password -->
+      <div>
+        <label for="reg-password" class="mb-1.5 block text-sm text-gray-600">Password*</label>
+        <div class="relative">
+          <input
+            id="reg-password"
+            [type]="showPassword() ? 'text' : 'password'"
+            formControlName="password"
+            autocomplete="new-password"
+            placeholder="Create a strong password"
+            class="w-full rounded-lg border py-2.5 pl-4 pr-11 text-sm text-gray-800 placeholder:text-gray-400 outline-none transition"
+            [class]="
+              password?.invalid && password?.touched
+                ? 'border-red-400 focus:ring-2 focus:ring-red-200'
+                : 'border-gray-200 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-100'
+            "
+          />
+          <button
+            type="button"
+            (click)="togglePassword()"
+            class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 transition hover:text-gray-600"
+          >
+            <i [class]="showPassword() ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'"></i>
+          </button>
+        </div>
+        @if (password?.touched && password?.hasError('required')) {
+          <p class="mt-1 text-xs text-red-500">Password is required.</p>
+        } @else if (password?.touched && password?.hasError('pattern')) {
+          <p class="mt-1 text-xs text-red-500">
+            Must contain at least 8 chars, 1 uppercase, 1 lowercase, 1 number, and 1 special
+            character.
+          </p>
+        }
+      </div>
+
+      <!-- Confirm Password -->
+      <div>
+        <label for="reg-repassword" class="mb-1.5 block text-sm text-gray-600"
+          >Confirm Password*</label
+        >
+        <div class="relative">
+          <input
+            id="reg-repassword"
+            [type]="showRePassword() ? 'text' : 'password'"
+            formControlName="rePassword"
+            autocomplete="new-password"
+            placeholder="Confirm your password"
+            class="w-full rounded-lg border py-2.5 pl-4 pr-11 text-sm text-gray-800 placeholder:text-gray-400 outline-none transition"
+            [class]="
+              rePassword?.invalid && rePassword?.touched
+                ? 'border-red-400 focus:ring-2 focus:ring-red-200'
+                : 'border-gray-200 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-100'
+            "
+          />
+          <button
+            type="button"
+            (click)="toggleRePassword()"
+            class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 transition hover:text-gray-600"
+          >
+            <i [class]="showRePassword() ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'"></i>
+          </button>
+        </div>
+        @if (rePassword?.touched && rePassword?.hasError('required')) {
+          <p class="mt-1 text-xs text-red-500">Please confirm your password.</p>
+        } @else if (rePassword?.touched && rePassword?.hasError('mismatch')) {
+          <p class="mt-1 text-xs text-red-500">Passwords do not match.</p>
+        }
+      </div>
+
+      <!-- Phone -->
+      <div>
+        <label for="phone" class="mb-1.5 block text-sm text-gray-600">Phone Number*</label>
+        <input
+          id="phone"
+          type="tel"
+          formControlName="phone"
+          autocomplete="tel"
+          placeholder="01012345678"
+          class="w-full rounded-lg border px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 outline-none transition"
+          [class]="
+            phone?.invalid && phone?.touched
+              ? 'border-red-400 focus:ring-2 focus:ring-red-200'
+              : 'border-gray-200 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-100'
+          "
+        />
+        @if (phone?.touched && phone?.hasError('required')) {
+          <p class="mt-1 text-xs text-red-500">Phone is required.</p>
+        } @else if (phone?.touched && phone?.hasError('pattern')) {
+          <p class="mt-1 text-xs text-red-500">
+            Please enter a valid Egyptian phone number (e.g., 01012345678).
+          </p>
+        }
+      </div>
+
+      <!-- Submit -->
+      <div class="pt-2">
+        <button
+          type="submit"
+          [disabled]="isLoading()"
+          class="flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-emerald-600 py-3 font-medium text-white transition duration-200 hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-60"
+        >
+          @if (isLoading()) {
+            <i class="fa-solid fa-spinner fa-spin"></i>
+            Creating Account...
+          } @else {
+            <i class="fa-solid fa-user-plus"></i>
+            Create My Account
+          }
+        </button>
+      </div>
+    </form>
+
+    <p class="mt-8 text-center text-sm text-gray-600">
+      Already have an account?
+      <a routerLink="/login" class="font-medium text-emerald-600 hover:underline">Sign In</a>
+    </p>
+  </div>
+</section>
